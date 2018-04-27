@@ -6,8 +6,10 @@ Stay tuned for more updates.
 
 **Prerequisites:**
 
-Linux (Ubuntu 16.04 preferred)
+Linux (Ubuntu 16.04 preferred).
+
 Mac (python 2.7 and redis-server should be installed manually.)
+
 Windows: Not supported in current library version.
 
 
