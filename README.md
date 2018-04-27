@@ -20,7 +20,9 @@ pip -H install tornado
 Coming soon
 
 **Setup (common):**
+
 git clone https://github.com/flytbase/xbuild_demo
+
 cd xbuild_demo
 
 edit the credentials.txt file, fill in vehicle ID and API key from your my.flytbase.com account.
