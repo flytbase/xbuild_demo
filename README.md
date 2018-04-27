@@ -10,14 +10,18 @@ Linux (Ubuntu 16.04 preferred)
 Mac (python 2.7 and redis-server should be installed manually.)
 Windows: Not supported in current library version.
 
+
 **Setup (Ubuntu users):**
 
 sudo apt-get install redis-server
+
 pip -H install tornado
+
 
 **Setup (Mac users):**
 
 Coming soon
+
 
 **Setup (common):**
 
@@ -29,7 +33,9 @@ edit the credentials.txt file, fill in vehicle ID and API key from your my.flytb
 
 
 **Running the demo:**
+
 python make_takeoff_land.py 5.
+
 
 **Support:**
 
