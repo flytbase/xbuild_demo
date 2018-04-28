@@ -10,7 +10,7 @@ Linux (Ubuntu 16.04 preferred).
 
 Mac (python 2.7 and redis-server should be installed manually.)
 
-Windows: Not supported in current library version.
+Windows: Supported, talk to FlytBase support team on slack.
 
 
 **Setup (Ubuntu users):**
