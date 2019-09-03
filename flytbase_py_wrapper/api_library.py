@@ -1,18 +1,22 @@
 import json
-from requests import get, put
+from requests import get, put, post
 
 
 class DroneController(object):
-    def __init__(self, Token, VehicleId, fb_server_url='https://dev.flytbase.com/rest/ros/flytsim'):
+    def __init__(self, Token=None, VehicleId=None, fb_server_url='https://dev.flytbase.com/rest/ros/flytsim', local=False):
         # replace with your own drone
-        self.headers = {'Authorization': 'Token ' + Token, 'VehicleID': VehicleId}
+        self.local = local
+        if self.local:
+            self.headers = {}
+        else:
+            self.headers = {'Authorization': 'Token ' + Token, 'VehicleID': VehicleId}
         self.fb_server_url = fb_server_url
 
     def take_off(self, takeoff_alt=5.0):
         '''
         Takeoff routine for the vehicle. Takes height as argument according to NED convention.
         '''
-        res = put(self.fb_server_url + '/navigation/take_off', headers=self.headers,
+        res = post(self.fb_server_url + '/navigation/take_off', headers=self.headers,
                   data=json.dumps({"takeoff_alt": takeoff_alt}))
         if res.status_code == 200:
             resp = res.json()
@@ -20,13 +24,14 @@ class DroneController(object):
             msg = resp["message"]
             return (success, msg)
         else:
+            print res, res.headers, res.url, res.content, res.reason, res.request
             return (False, "request failed")
 
     def land(self, async=True):
         '''
         Land the vehicle. Function take no arguments.
         '''
-        res = put(self.fb_server_url + '/navigation/land', headers=self.headers,
+        res = post(self.fb_server_url + '/navigation/land', headers=self.headers,
                   data=json.dumps({"async": async}))
         if res.status_code == 200:
             resp = res.json()
@@ -34,13 +39,14 @@ class DroneController(object):
             msg = resp["message"]
             return (success, msg)
         else:
+            print res
             return (False, "request failed")
 
     def position_hold(self):
         '''
         Land the vehicle. Function take no arguments.
         '''
-        res = get(self.fb_server_url + '/navigation/position_hold', headers=self.headers)
+        res = post(self.fb_server_url + '/navigation/position_hold', headers=self.headers)
         if res.status_code == 200:
             resp = res.json()
             success = resp["success"]
@@ -53,7 +59,7 @@ class DroneController(object):
         '''
         Land the vehicle. Function take no arguments.
         '''
-        res = get(self.fb_server_url + '/navigation/position_set_global', headers=self.headers,
+        res = post(self.fb_server_url + '/navigation/position_set_global', headers=self.headers,
                   data=json.dumps({'lat_x': lat, 'long_y': lon, 'rel_alt_z': rel_ht, 'yaw': yaw,
                                    'tolerance': tolerance, 'async': async,
                                    'yaw_valid': yaw_valid}))
@@ -68,7 +74,7 @@ class DroneController(object):
 
     def velocity_set(self, vx, vy, vz, yaw_rate=0.0,
                      tolerance=1.0, relative=False, async=True, yaw_rate_valid=False, body_frame=True):
-        res = get(self.fb_server_url + '/navigation/velocity_set', headers=self.headers,
+        res = post(self.fb_server_url + '/navigation/velocity_set', headers=self.headers,
                   data=json.dumps({"vx": vx, "vy": vy, "vz": vz, "yaw_rate": yaw_rate,
                                    "tolerance": tolerance, "async": async, "relative": relative,
                                    "yaw_rate_valid": yaw_rate_valid, "body_frame": body_frame}))

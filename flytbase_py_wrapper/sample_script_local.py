@@ -2,17 +2,16 @@ from api_library import DroneController
 import time
 
 
-droneHandle = DroneController('84d440b0ba95c19ccd8e56a2cf0e540694798850', 'r6nRDos0',
-                              'https://dev.flytbase.com/rest/ros/flytos')
+droneHandle = DroneController(fb_server_url='http://localhost:80/ros/flytsim',local=True)
 
-print "#### FlytBase Cloud Demo ####"
+print "#### FlytOS local Demo ####"
 
 
 print "sending takeoff command"
 print droneHandle.take_off(2.0)
 
 print "Wait for some time"
-time.sleep(4.0)
+time.sleep(10.0)
 
 print "sending yaw rate command"
 print droneHandle.velocity_set(0.0, 0.0, 0.0, yaw_rate=0.8, yaw_rate_valid=True)
