@@ -1,17 +1,28 @@
 from api_library import DroneController
 import time
 
-droneHandle = DroneController('84d440b0ba95c19ccd8e56a2cf0e540694798850', 'r6nRDos0')
 
-print "demo"
+droneHandle = DroneController('84d440b0ba95c19ccd8e56a2cf0e540694798850', 'r6nRDos0',
+                              'https://dev.flytbase.com/rest/ros/flytos')
 
-# print "takeoff"
-# print droneHandle.take_off(2.0)
-#
-# print "sleeping"
-# time.sleep(4.0)
+print "#### FlytBase Cloud Demo ####"
 
-print "land"
+
+print "sending takeoff command"
+print droneHandle.take_off(1.2)
+
+print "Wait for some time"
+time.sleep(4.0)
+
+print "sending yaw rate command"
+print droneHandle.velocity_set(0.0, 0.0, 0.0, yaw_rate=0.8, yaw_rate_valid=True)
+
+time.sleep(10.0)
+
+print "sending position hold command"
+print droneHandle.position_hold()
+
+print "sending land command"
 print droneHandle.land(True)
 
 # print droneHandle.position_hold()

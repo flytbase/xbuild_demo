@@ -114,8 +114,14 @@ class DroneController(object):
         res = get(self.fb_server_url + '/mavros/local_position/local', headers=self.headers)
         if res.status_code == 200:
             resp = res.json()
-            print resp
             return True
-            # return ({'longitude': resp['longitude'], 'latitude': resp['latitude'], 'altitude': resp['altitude'], })
+        else:
+            return (False, "request failed")
+
+    def get_vehicle_state(self):
+        res = get(self.fb_server_url + '/flyt/state', headers=self.headers)
+        if res.status_code == 200:
+            resp = res.json()
+            return True
         else:
             return (False, "request failed")
